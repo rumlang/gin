@@ -78,6 +78,8 @@ func TestValid(t *testing.T) {
 		"(if false 7 8)": int64(8),
 		// Test 'lambda'
 		`(package "main" (var d (lambda (n) (+ n n))) (d 3))`: int64(6),
+		// Test 'def'
+		`package "main" (def d(n) (+ n n)) (d 3))`: int64(6),
 		// Test that inner scopes are not override outer scope.
 		`(package "main" (var n 7) (var d (lambda (n) (+ n n))) (+ n (d 3)))`: int64(13),
 		// Test float

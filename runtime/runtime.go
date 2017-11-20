@@ -214,8 +214,9 @@ func NewContext(parent *Context) *Context {
 	defaults := map[parser.Identifier]interface{}{
 		"package":  Package,
 		"array":    Internal(Array),
-		"var":      Internal(Define),
+		"var":      Internal(Var),
 		"if":       Internal(If),
+		"def":      Internal(Def),
 		"lambda":   Internal(Lambda),
 		"eval":     Internal(Eval),
 		"panic":    Panic,
@@ -247,6 +248,7 @@ func NewContext(parent *Context) *Context {
 	return c
 }
 
+// Array define single or multiple-dimension arrays using the make-array function
 func Array(ctx *Context, args ...parser.Value) parser.Value {
 	if len(args) != 1 {
 		panic("Invalid number of arguments for array")
@@ -261,7 +263,7 @@ func Package(name string, values ...interface{}) interface{} {
 	return values[len(values)-1]
 }
 
-func Define(ctx *Context, args ...parser.Value) parser.Value {
+func Var(ctx *Context, args ...parser.Value) parser.Value {
 	if len(args) != 2 {
 		panic("Invalid arguments")
 	}
@@ -293,6 +295,44 @@ func If(ctx *Context, args ...parser.Value) parser.Value {
 	return ctx.MustEval(args[2])
 }
 
+// Def is a group of statements that together perform a task.
+func Def(ctx *Context, args ...parser.Value) parser.Value {
+	if len(args) != 3 {
+		panic("Invalid arguments")
+	}
+
+	id, ok := args[0].Value().(parser.Identifier)
+	if !ok {
+		panic("TODO")
+	}
+
+	params, ok := args[1].Value().([]parser.Value)
+	if !ok {
+		panic("TODO")
+	}
+	names := []parser.Identifier{}
+	for _, v := range params {
+		id, ok := v.Value().(parser.Identifier)
+		if !ok {
+			panic("TODO")
+		}
+		names = append(names, id)
+	}
+	implValue := args[2]
+	impl := func(implCtx *Context, args ...parser.Value) parser.Value {
+		if len(args) != len(names) {
+			panic("TODO")
+		}
+		nested := NewContext(implCtx)
+		for i, name := range names {
+			nested.Set(name, implCtx.MustEval(args[i]))
+		}
+		return nested.MustEval(implValue)
+	}
+	return ctx.Set(id, parser.NewAny(Internal(impl), nil))
+}
+
+// Lambda anonymous functions that are evaluated only when they are encountered in the program
 func Lambda(ctx *Context, args ...parser.Value) parser.Value {
 	if len(args) != 2 {
 		panic("Invalid arguments")

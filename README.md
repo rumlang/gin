@@ -38,8 +38,8 @@ go run gin.go
   (print (a))
 
   ; create function
-  (def hi
-    ('Hello))
+  (def hi()
+    'Hello)
   (print hi)
 
   ; create function (by lambda)

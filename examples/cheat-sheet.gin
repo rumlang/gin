@@ -10,6 +10,10 @@
     (lambda (r) (* 3.141592653 (* r r))))
   (print (area 10.0))
 
+  (def area(r)
+    (* 3.141592653 (* r r)))
+  (print (area 100.0))
+
   ; Quote
   (var plop '(a b c))
   (print plop)
