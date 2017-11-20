@@ -2,8 +2,8 @@ package interative
 
 import (
 	"fmt"
-	"os"
 	"io"
+	"os"
 	"os/user"
 	"strings"
 
@@ -39,11 +39,11 @@ func filterInput(r rune) (rune, bool) {
 // REPL starts a full interpreter, accepting glop code on its prompt.
 func REPL() (err error) {
 	l, err := readline.NewEx(&readline.Config{
-		Prompt:          	">>> ",
-		HistoryFile:     	"~/.gin_history",
-		AutoComplete:    	readline.NewPrefixCompleter(),
-		InterruptPrompt: 	"^C",
-		EOFPrompt:       	"exit",
+		Prompt:              ">>> ",
+		HistoryFile:         "~/.gin_history",
+		AutoComplete:        readline.NewPrefixCompleter(),
+		InterruptPrompt:     "^C",
+		EOFPrompt:           "exit",
 		HistorySearchFold:   true,
 		FuncFilterInputRune: filterInput,
 	})
@@ -70,7 +70,7 @@ func REPL() (err error) {
 		} else if err == io.EOF {
 			break
 		}
-		
+
 		line = strings.TrimSpace(line)
 		if len(line) == 0 {
 			continue

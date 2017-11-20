@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/gin-lang/gin/parser"
 	"github.com/gin-lang/gin/interative"
+	"github.com/gin-lang/gin/parser"
 	"github.com/gin-lang/gin/runtime"
 )
 
