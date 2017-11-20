@@ -1,6 +1,6 @@
 # gin (Go in numbers)
 
-[![Build Status](https://travis-ci.org/gin-lang/gin.svg?branch=add-travis-ci)](https://travis-ci.org/gin-lang/gin)
+[![Build Status](https://travis-ci.org/gin-lang/gin.svg?branch=master)](https://travis-ci.org/gin-lang/gin)
 
 Free software environment for statistical computing
 
