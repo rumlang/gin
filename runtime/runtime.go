@@ -312,11 +312,11 @@ func Def(ctx *Context, args ...parser.Value) parser.Value {
 	}
 	names := []parser.Identifier{}
 	for _, v := range params {
-		id, ok := v.Value().(parser.Identifier)
+		nameid, ok := v.Value().(parser.Identifier)
 		if !ok {
 			panic("TODO")
 		}
-		names = append(names, id)
+		names = append(names, nameid)
 	}
 	implValue := args[2]
 	impl := func(implCtx *Context, args ...parser.Value) parser.Value {
