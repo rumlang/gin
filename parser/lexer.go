@@ -107,7 +107,7 @@ func (l *lexer) stateIdentifier() stateFn {
 	var next stateFn
 	for next == nil {
 		r := l.peek()
-		
+
 		switch {
 		case r == '(':
 			next = l.stateOpen
