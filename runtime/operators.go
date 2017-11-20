@@ -85,7 +85,7 @@ func OpMul(values ...interface{}) interface{} {
 		}
 		return total
 	case float64:
-		var total float64 = 1.0
+		var total = 1.0
 		for _, v := range values {
 			total *= v.(float64)
 		}
@@ -106,7 +106,7 @@ func OpMulInt64(values ...int64) int64 {
 
 // OpMulFloat64 implements '*float64' function.
 func OpMulFloat64(values ...float64) float64 {
-	var total float64 = 1.0
+	var total = 1.0
 	for _, v := range values {
 		total *= v
 	}
