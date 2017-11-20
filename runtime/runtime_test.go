@@ -104,7 +104,7 @@ func TestValid(t *testing.T) {
 func TestValidList(t *testing.T) {
 	valid := map[string][]interface{}{
 		// Test single array notation
-		"'(1 2)": []interface{}{int64(1), int64(2)},
+		"'(1 2)": {int64(1), int64(2)},
 	}
 
 	for input, expected := range valid {

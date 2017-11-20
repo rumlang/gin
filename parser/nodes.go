@@ -29,6 +29,7 @@ type Any struct {
 	ref   *SourceRef
 }
 
+// Value function return value of current node
 func (a Any) Value() interface{} {
 	return a.value
 }
@@ -48,10 +49,12 @@ func (a Any) String() string {
 	}
 }
 
+// Ref funcrion return current value by reference
 func (a Any) Ref() *SourceRef {
 	return a.ref
 }
 
+// NewAny create new instance of Any
 func NewAny(v interface{}, ref *SourceRef) Value {
 	return Any{
 		value: v,

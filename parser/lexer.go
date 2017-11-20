@@ -7,14 +7,15 @@ import (
 )
 
 const (
-	// A closing parenthesis was expected, found something else instead.
+	// ErrMissingClosingParenthesis a closing parenthesis was expected, found something else instead.
 	ErrMissingClosingParenthesis = iota
-	// An unknown/invalid token was found at the beginning of an expression.
+	// ErrInvalidNudToken an unknown/invalid token was found at the beginning of an expression.
 	ErrInvalidNudToken
-	// An unknown/invalid token was found in an expression.
+	// ErrInvalidLedToken an unknown/invalid token was found in an expression.
 	ErrInvalidLedToken
 )
 
+// ErrorCode type to parser errors
 type ErrorCode int
 
 func (c ErrorCode) String() string {

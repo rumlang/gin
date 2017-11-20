@@ -7,23 +7,23 @@ import (
 
 func TestLexer(t *testing.T) {
 	tests := map[string][]tokenInfo{
-		"foo": []tokenInfo{
+		"foo": {
 			{text: []rune{'f', 'o', 'o'}, id: tokIdentifier, value: "foo", ref: &SourceRef{Line: 0, Column: 0}},
 		},
-		"(foo)": []tokenInfo{
+		"(foo)": {
 			{text: []rune{'('}, id: tokOpen, ref: &SourceRef{Line: 0, Column: 0}},
 			{text: []rune{'f', 'o', 'o'}, id: tokIdentifier, value: "foo", ref: &SourceRef{Line: 0, Column: 1}},
 			{text: []rune{')'}, id: tokClose, ref: &SourceRef{Line: 0, Column: 4}},
 		},
-		" (  foo ) ": []tokenInfo{
+		" (  foo ) ": {
 			{text: []rune{'('}, id: tokOpen, ref: &SourceRef{Line: 0, Column: 1}},
 			{text: []rune{'f', 'o', 'o'}, id: tokIdentifier, value: "foo", ref: &SourceRef{Line: 0, Column: 4}},
 			{text: []rune{')'}, id: tokClose, ref: &SourceRef{Line: 0, Column: 8}},
 		},
-		" \nfoo": []tokenInfo{
+		" \nfoo": {
 			{text: []rune{'f', 'o', 'o'}, id: tokIdentifier, value: "foo", ref: &SourceRef{Line: 1, Column: 0}},
 		},
-		"1.2": []tokenInfo{
+		"1.2": {
 			{text: []rune{'1', '.', '2'}, id: tokFloat, value: 1.2, ref: &SourceRef{Line: 0, Column: 0}},
 		},
 	}
@@ -58,7 +58,7 @@ func TestLexerErrors(t *testing.T) {
 
 	for input, count := range tests {
 		l := newLexer(NewSource(input))
-		for _ = range l.tokens {
+		for range l.tokens {
 			count--
 		}
 		if count > 0 {
@@ -147,14 +147,14 @@ func TestParsingErrors(t *testing.T) {
 	}
 
 	tests := map[string]foo{
-		"(+": foo{
+		"(+": {
 			code: ErrMissingClosingParenthesis,
 			ref: SourceRef{
 				Line:   0,
 				Column: 2,
 			},
 		},
-		"(": foo{
+		"(": {
 			code: ErrMissingClosingParenthesis,
 			ref: SourceRef{
 				Line:   0,

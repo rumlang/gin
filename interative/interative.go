@@ -82,6 +82,10 @@ func REPL() (err error) {
 		if err == nil {
 			// Executing
 			out, err = ctx.TryEval(root)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "%v\n", err)
+				continue
+			}
 		} else {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			continue
