@@ -25,7 +25,7 @@ go run gin.go
 ## Proposal syntax
 
 ```
-(package
+(package "main"
   ; load file on this code
   (load 'lerolero) ; ./lerolero.gl
 

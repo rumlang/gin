@@ -254,7 +254,7 @@ func Array(ctx *Context, args ...parser.Value) parser.Value {
 	return args[0]
 }
 
-func Package(values ...interface{}) interface{} {
+func Package(name string, values ...interface{}) interface{} {
 	if len(values) == 0 {
 		return nil
 	}

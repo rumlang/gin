@@ -65,21 +65,21 @@ func TestValid(t *testing.T) {
 		"(>= 3.0 3.0)":       true,
 		"(>= 3.0 2.0)":       true,
 		// Test 'package'
-		"(package 1 (+ 1 1))":       int64(2),
-		"(package)":                 nil,
-		"(package (+ 1 2) (+ 3 4))": int64(7),
-		"(package (print 1 2))":     nil,
+		`(package "main" 1 (+ 1 1))`:       int64(2),
+		`(package "main")`:                 nil,
+		`(package "main" (+ 1 2) (+ 3 4))`: int64(7),
+		`(package "main" (print 1 2))`:     nil,
 		// Test 'var'
-		"(package (var a 5) a)":            int64(5),
-		"(package (var a 5) (var a 4) a)": int64(4),
+		`(package "main" (var a 5) a)`:            int64(5),
+		`(package "main" (var a 5) (var a 4) a)`: int64(4),
 		// Test 'if'
 		"(if true 7)":    int64(7),
 		"(if false 7)":   nil,
 		"(if false 7 8)": int64(8),
 		// Test 'lambda'
-		"(package (var d (lambda (n) (+ n n))) (d 3))": int64(6),
+		`(package "main" (var d (lambda (n) (+ n n))) (d 3))`: int64(6),
 		// Test that inner scopes are not override outer scope.
-		"(package (var n 7) (var d (lambda (n) (+ n n))) (+ n (d 3)))": int64(13),
+		`(package "main" (var n 7) (var d (lambda (n) (+ n n))) (+ n (d 3)))`: int64(13),
 		// Test float
 		".3": float64(.3),
 		// Test length
@@ -88,7 +88,7 @@ func TestValid(t *testing.T) {
 		`"plop"`:   "plop",
 		`"p\"lop"`: `p"lop`,
 		// Test eval
-		"(package (var a '(+ 1 2)) (eval a))": int64(3),
+		`(package "main" (var a '(+ 1 2)) (eval a))`: int64(3),
 	}
 
 	for input, expected := range valid {

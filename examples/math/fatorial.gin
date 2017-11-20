@@ -1,15 +1,15 @@
-(package math
+(package "math"
   ; fatorial with lambda
   (var lfactorial
-    (lambda (n) 
-      (if (= n 0) 
+    (lambda (n)
+      (if (= n 0)
         (1)
         (else
           (* n (lfactorial (- n 1)))))))
 
   ; fatorial with def function
-  (def factorial (n) 
-      (if (= n 0) 
+  (def factorial (n)
+      (if (= n 0)
         (return 1)
       (* n (factorial (- n 1))))))
 )

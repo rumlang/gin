@@ -1,4 +1,4 @@
-(package
+(package "main"
   ; Canonical example
   (print "Hello, World!")
 
