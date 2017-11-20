@@ -142,6 +142,7 @@ func OpEqual(values ...interface{}) interface{} {
 	}
 }
 
+// OpNotEqual implements the != comparaison operator.
 func OpNotEqual(values ...interface{}) interface{} {
 	if len(values) != 2 {
 		panic("Function '!=' should take exactly two arguments")
@@ -149,6 +150,7 @@ func OpNotEqual(values ...interface{}) interface{} {
 	return !OpEqual(values...).(bool)
 }
 
+// OpLess implements the < comparaison operator.
 func OpLess(values ...interface{}) interface{} {
 	if len(values) != 2 {
 		panic("Comparaison function should take two arguments")
@@ -178,14 +180,17 @@ func OpLess(values ...interface{}) interface{} {
 	}
 }
 
+// OpLessEqual implements the <= comparaison operator.
 func OpLessEqual(values ...interface{}) interface{} {
 	return OpLess(values...).(bool) || OpEqual(values...).(bool)
 }
 
+// OpGreater implements the > comparaison operator.
 func OpGreater(values ...interface{}) interface{} {
 	return !OpLessEqual(values...).(bool)
 }
 
+// OpGreaterEqual implements the >= comparaison operator.
 func OpGreaterEqual(values ...interface{}) interface{} {
 	return !OpLess(values...).(bool)
 }
