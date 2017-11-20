@@ -16,6 +16,7 @@ const (
 	ErrUnknownVariable
 )
 
+// ErrorCode type to parser errors
 type ErrorCode int
 
 func (c ErrorCode) String() string {
@@ -95,6 +96,7 @@ func (c *Context) Get(id parser.Identifier) parser.Value {
 	return v
 }
 
+// Set an iten in parser function map
 func (c *Context) Set(id parser.Identifier, v parser.Value) parser.Value {
 	c.env[id] = v
 	return v
@@ -205,6 +207,8 @@ func (c *Context) MustEval(input parser.Value) parser.Value {
 	return v
 }
 
+// NewContext create new runtime context
+// instance and load default parser funcrions
 func NewContext(parent *Context) *Context {
 	c := &Context{
 		parent: parent,
@@ -256,6 +260,7 @@ func Array(ctx *Context, args ...parser.Value) parser.Value {
 	return args[0]
 }
 
+// Package implements the package reserved word.
 func Package(name string, values ...interface{}) interface{} {
 	if len(values) == 0 {
 		return nil
@@ -263,6 +268,7 @@ func Package(name string, values ...interface{}) interface{} {
 	return values[len(values)-1]
 }
 
+// Var implements the var reserved word.
 func Var(ctx *Context, args ...parser.Value) parser.Value {
 	if len(args) != 2 {
 		panic("Invalid arguments")
@@ -365,18 +371,22 @@ func Lambda(ctx *Context, args ...parser.Value) parser.Value {
 	return parser.NewAny(Internal(impl), nil)
 }
 
+// Type implements the type function.
 func Type(v interface{}) string {
 	return fmt.Sprintf("%T", v)
 }
 
+// Length implements the len function.
 func Length(elt []parser.Value) int64 {
 	return int64(len(elt))
 }
 
+// Panic implements the panic function.
 func Panic(v interface{}) {
 	panic(v)
 }
 
+// Print implements the print function.
 func Print(args ...interface{}) {
 	for i, v := range args {
 		if i != 0 {
@@ -387,6 +397,7 @@ func Print(args ...interface{}) {
 	fmt.Printf("\n")
 }
 
+// Eval implements the eval function.
 func Eval(ctx *Context, raw ...parser.Value) parser.Value {
 
 	// Do the normal evaluation of each parameter first - as we're in an internal

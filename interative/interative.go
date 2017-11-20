@@ -94,4 +94,5 @@ func REPL() (err error) {
 		v := out.Value()
 		fmt.Println(v)
 	}
+	return
 }
