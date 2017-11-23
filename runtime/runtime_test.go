@@ -91,6 +91,8 @@ func TestValid(t *testing.T) {
 		`"p\"lop"`: `p"lop`,
 		// Test eval
 		`(package "main" (var a '(+ 1 2)) (eval a))`: int64(3),
+		// Test empty
+		`()`: nil,
 	}
 
 	for input, expected := range valid {
