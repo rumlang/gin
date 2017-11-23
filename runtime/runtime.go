@@ -108,7 +108,7 @@ func (c *Context) dispatch(input parser.Value) (parser.Value, error) {
 	switch data := input.Value().(type) {
 	case []parser.Value:
 		if len(data) <= 0 {
-			return nil, nil
+			return parser.NewAny(nil, nil), nil
 		}
 
 		fn, err := c.eval(data[0])
