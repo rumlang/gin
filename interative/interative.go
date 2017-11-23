@@ -3,6 +3,7 @@ package interative
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"os/user"
 	"strings"
@@ -50,7 +51,15 @@ func REPL() (err error) {
 	if err != nil {
 		return
 	}
-	defer l.Close()
+	defer func(l *readline.Instance) {
+		errReadlineClose := l.Close()
+		if errReadlineClose != nil {
+			log.Println(errReadlineClose)
+			if err == nil {
+				err = errReadlineClose
+			}
+		}
+	}(l)
 
 	// Prepare runtime environment
 	ctx := ginRuntime.NewContext(nil)
