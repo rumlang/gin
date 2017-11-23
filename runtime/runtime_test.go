@@ -11,7 +11,7 @@ import (
 func mustParse(s string) parser.Value {
 	v, err := parser.Parse(parser.NewSource(s))
 	if err != nil {
-		panic(fmt.Sprintf("Unable to parse %q: %v", err))
+		panic(fmt.Sprintf("Unable to parse %q: %v", s, err))
 	}
 	return v
 }
