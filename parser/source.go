@@ -19,7 +19,7 @@ func (e MultiError) Error() string {
 		out += fmt.Sprintf("%s %s\n", prefix, err.Error())
 
 		if details, ok := err.(Error); ok {
-			out += fmt.Sprint(details.Ref.Context(strings.Repeat(" ", len(prefix)+1)))
+			out += details.Ref.Context(strings.Repeat(" ", len(prefix)+1))
 		}
 	}
 	return out

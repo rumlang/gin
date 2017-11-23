@@ -53,7 +53,7 @@ func (e *Error) String() string {
 		} else {
 			out += "  # called from:\n"
 		}
-		out += fmt.Sprintf(v.Ref().Context("    "))
+		out += v.Ref().Context("    ")
 	}
 
 	if e.Code == ErrPanic {
