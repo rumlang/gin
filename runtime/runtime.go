@@ -223,6 +223,7 @@ func NewContext(parent *Context) *Context {
 		"def":      Internal(Def),
 		"lambda":   Internal(Lambda),
 		"eval":     Internal(Eval),
+		"for":      Internal(For),
 		"panic":    Panic,
 		"len":      Length,
 		"print":    Print,
@@ -413,4 +414,28 @@ func Eval(ctx *Context, raw ...parser.Value) parser.Value {
 		result = ctx.MustEval(arg)
 	}
 	return result
+}
+
+// For implements for loop
+func For(ctx *Context, args ...parser.Value) parser.Value {
+	if len(args) < 2 {
+		panic("Invalid arguments")
+	}
+	_, ok := args[0].Value().(parser.Identifier)
+	if !ok {
+		panic("TODO")
+	}
+	params, ok := args[1].Value().([]parser.Value)
+	if !ok {
+		panic("TODO")
+	}
+	for _, s := range params[1:] {
+		a := s.(parser.Any)
+		vs := a.Value().([]parser.Value)
+		for _, v := range vs {
+			ts := Eval(ctx, args[0], v)
+			fmt.Println(ts.Value())
+		}
+	}
+	return parser.NewAny(nil, nil)
 }
