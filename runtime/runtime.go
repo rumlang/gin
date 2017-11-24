@@ -430,8 +430,7 @@ func For(ctx *Context, args ...parser.Value) parser.Value {
 		panic("TODO")
 	}
 	for _, s := range params[1:] {
-		a := s.(parser.Any)
-		vs := a.Value().([]parser.Value)
+		vs := s.Value().([]parser.Value)
 		for _, v := range vs {
 			ts := Eval(ctx, args[0], v)
 			fmt.Println(ts.Value())
