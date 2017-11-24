@@ -103,8 +103,8 @@ func main() {
 )
 `
 	s := bufio.NewScanner(strings.NewReader(input))
-	gin := gin.New()
-	err := gin.Run(s)
+	vm := gin.New()
+	err := vm.Run(s)
 	if err != nil {
 		panic(err)
 	}
