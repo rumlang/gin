@@ -268,7 +268,7 @@ func Package(name string, values ...interface{}) interface{} {
 	return values[len(values)-1]
 }
 
-// Let implements the var reserved word.
+// Let implements the let reserved word.
 func Let(ctx *Context, args ...parser.Value) parser.Value {
 	if len(args) != 2 {
 		panic("Invalid arguments")
