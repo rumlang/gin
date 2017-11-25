@@ -36,8 +36,8 @@ go run gin.go
   (import test 'lerolero.test) ; ./lerolero/test.lg
   (print (test.Test))
 
-  ; set vars
-  (var a 1)
+  ; set lets
+  (let a 1)
   (print (a))
 
   ; create function
@@ -46,16 +46,16 @@ go run gin.go
   (print hi)
 
   ; create function (by lambda)
-  (var area
+  (let area
     (lambda (r) (* 3.141592653 (* r r))))
   (print (area 10.0))
 
   ; create loops with for
   (for (print 'hello)) ; will loop while expression or function return false
   (for area (10.0 20.0 30.0) ; will interact on the list elements
-  (for (var a 1)
+  (for (let a 1)
     (= a 10)
-      (var a (+ a 1)
+      (let a (+ a 1)
       (print a)))
 
   ; create if
