@@ -6,7 +6,7 @@
   (print (+ 1 2))
 
   ; Create a function, run it and print the result.
-  (var area
+  (let area
     (lambda (r) (* 3.141592653 (* r r))))
   (print (area 10.0))
 
@@ -15,16 +15,16 @@
   (print (area 100.0))
 
   ; Quote
-  (var plop '(a b c))
+  (let plop '(a b c))
   (print plop)
 
   ; Eval
-  (var foo '(+ 1 a))
-  (var a 42)
+  (let foo '(+ 1 a))
+  (let a 42)
   (print (eval foo))  ; prints 43
-  (var a 11)
+  (let a 11)
   (print (eval foo))  ; prints 12
 
   ; sub package
-  (package (print a))  ; create sub package and print var main package
+  (package (print a))  ; create sub package and print let main package
 )

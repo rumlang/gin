@@ -69,19 +69,19 @@ func TestValid(t *testing.T) {
 		`(package "main")`:                 nil,
 		`(package "main" (+ 1 2) (+ 3 4))`: int64(7),
 		`(package "main" (print 1 2))`:     nil,
-		// Test 'var'
-		`(package "main" (var a 5) a)`:           int64(5),
-		`(package "main" (var a 5) (var a 4) a)`: int64(4),
+		// Test 'let'
+		`(package "main" (let a 5) a)`:           int64(5),
+		`(package "main" (let a 5) (let a 4) a)`: int64(4),
 		// Test 'if'
 		"(if true 7)":    int64(7),
 		"(if false 7)":   nil,
 		"(if false 7 8)": int64(8),
 		// Test 'lambda'
-		`(package "main" (var d (lambda (n) (+ n n))) (d 3))`: int64(6),
+		`(package "main" (let d (lambda (n) (+ n n))) (d 3))`: int64(6),
 		// Test 'def'
 		`(package "main" (def d(n) (+ n n)) (d 3))`: int64(6),
 		// Test that inner scopes are not override outer scope.
-		`(package "main" (var n 7) (var d (lambda (n) (+ n n))) (+ n (d 3)))`: int64(13),
+		`(package "main" (let n 7) (let d (lambda (n) (+ n n))) (+ n (d 3)))`: int64(13),
 		// Test float
 		".3": float64(.3),
 		// Test length
@@ -90,7 +90,7 @@ func TestValid(t *testing.T) {
 		`"plop"`:   "plop",
 		`"p\"lop"`: `p"lop`,
 		// Test eval
-		`(package "main" (var a '(+ 1 2)) (eval a))`: int64(3),
+		`(package "main" (let a '(+ 1 2)) (eval a))`: int64(3),
 		// Test empty
 		`()`: nil,
 	}

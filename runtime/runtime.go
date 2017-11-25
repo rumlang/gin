@@ -218,7 +218,7 @@ func NewContext(parent *Context) *Context {
 	defaults := map[parser.Identifier]interface{}{
 		"package":  Package,
 		"array":    Internal(Array),
-		"var":      Internal(Var),
+		"let":      Internal(Let),
 		"if":       Internal(If),
 		"def":      Internal(Def),
 		"lambda":   Internal(Lambda),
@@ -268,8 +268,8 @@ func Package(name string, values ...interface{}) interface{} {
 	return values[len(values)-1]
 }
 
-// Var implements the var reserved word.
-func Var(ctx *Context, args ...parser.Value) parser.Value {
+// Let implements the var reserved word.
+func Let(ctx *Context, args ...parser.Value) parser.Value {
 	if len(args) != 2 {
 		panic("Invalid arguments")
 	}
