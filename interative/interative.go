@@ -39,9 +39,14 @@ func filterInput(r rune) (rune, bool) {
 
 // REPL starts a full interpreter, accepting glop code on its prompt.
 func REPL() (err error) {
+
+	usr, err := user.Current()
+	if err != nil {
+		return
+	}
 	l, err := readline.NewEx(&readline.Config{
 		Prompt:              ">>> ",
-		HistoryFile:         "~/.gin_history",
+		HistoryFile:         usr.HomeDir + "/.gin_history",
 		AutoComplete:        readline.NewPrefixCompleter(),
 		InterruptPrompt:     "^C",
 		EOFPrompt:           "exit",
