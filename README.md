@@ -1,16 +1,16 @@
 # rum
 
-[![Build Status](https://travis-ci.org/rum-lang/rum.svg?branch=master)](https://travis-ci.org/rum-lang/rum)
-[![Go Report Card](https://goreportcard.com/badge/github.com/rum-lang/rum)](https://goreportcard.com/report/github.com/rum-lang/rum)
-[![Documentation](https://godoc.org/github.com/rum-lang/rum?status.svg)](http://godoc.org/github.com/rum-lang/rum)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/rum-lang/rum/LICENSE)
+[![Build Status](https://travis-ci.org/rumlang/rum.svg?branch=master)](https://travis-ci.org/rumlang/rum)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rumlang/rum)](https://goreportcard.com/report/github.com/rumlang/rum)
+[![Documentation](https://godoc.org/github.com/rumlang/rum?status.svg)](http://godoc.org/github.com/rumlang/rum)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/rumlang/rum/LICENSE)
 
 Free software environment for statistical computing
 
 ## Install
 
 ```
-go install github.com/rum-lang/rum
+go install github.com/rumlang/rum
 ```
 
 ## Run
@@ -81,7 +81,7 @@ go run rum.go
 ### Install
 
 ```
-go get github.com/rum-lang/rum
+go get github.com/rumlang/rum
 ```
 
 ### Example
@@ -93,7 +93,7 @@ import (
 	"bufio"
 	"strings"
 
-	"github.com/rum-lang/rum"
+	"github.com/rumlang/rum"
 )
 
 func main() {

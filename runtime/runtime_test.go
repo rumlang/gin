@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/rum-lang/rum/parser"
+	"github.com/rumlang/rum/parser"
 )
 
 func mustParse(s string) parser.Value {

@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/chzyer/readline"
-	"github.com/rum-lang/rum/parser"
-	rumRuntime "github.com/rum-lang/rum/runtime"
+	"github.com/rumlang/rum/parser"
+	rumRuntime "github.com/rumlang/rum/runtime"
 )
 
 // ExpandFilename replace '~/' with the user home directory.

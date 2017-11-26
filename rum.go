@@ -6,9 +6,9 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/rum-lang/rum/interative"
-	"github.com/rum-lang/rum/parser"
-	"github.com/rum-lang/rum/runtime"
+	"github.com/rumlang/rum/interative"
+	"github.com/rumlang/rum/parser"
+	"github.com/rumlang/rum/runtime"
 )
 
 func main() {

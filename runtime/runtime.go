@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/rum-lang/rum/parser"
+	"github.com/rumlang/rum/parser"
 )
 
 const (
