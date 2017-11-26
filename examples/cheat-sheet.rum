@@ -15,11 +15,11 @@
   (print (area 100.0))
 
   ; Quote
-  (let plop '(a b c))
+  (let plop (array (a b c))
   (print plop)
 
   ; Eval
-  (let foo '(+ 1 a))
+  (let foo (array (+ 1 a))
   (let a 42)
   (print (eval foo))  ; prints 43
   (let a 11)

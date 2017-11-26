@@ -96,11 +96,10 @@ func TestParsingExpression(t *testing.T) {
 		"(a ; b \n c)": 2,
 
 		// Test array
-		"(a ')":      -1,
-		"('a 'b c)":  3,
-		"('(a b) c)": 2,
-		"(a 'b c)":   3,
-		"(a '(b c))": 2,
+		"(a array()":             -1,
+		"(array (a array(b c)))": 2,
+		"(array(a b) c)":         3,
+		"(a (array (b c)))":      2,
 	}
 
 	for input, count := range tests {

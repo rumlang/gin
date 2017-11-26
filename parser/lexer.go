@@ -118,8 +118,6 @@ func (l *lexer) stateIdentifier() stateFn {
 			next = l.stateComment
 		case r == '"':
 			next = l.stateString
-		case r == '\'':
-			next = l.stateArray
 		case unicode.IsSpace(r):
 			next = l.stateSpace
 		case r == 0: // rune is 0 when scan is finished.
