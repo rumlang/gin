@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/chzyer/readline"
-	"github.com/gin-lang/gin/parser"
-	ginRuntime "github.com/gin-lang/gin/runtime"
+	"github.com/rum-lang/rum/parser"
+	rumRuntime "github.com/rum-lang/rum/runtime"
 )
 
 // ExpandFilename replace '~/' with the user home directory.
@@ -46,7 +46,7 @@ func REPL() (err error) {
 	}
 	l, err := readline.NewEx(&readline.Config{
 		Prompt:              ">>> ",
-		HistoryFile:         usr.HomeDir + "/.gin_history",
+		HistoryFile:         usr.HomeDir + "/.rum_history",
 		AutoComplete:        readline.NewPrefixCompleter(),
 		InterruptPrompt:     "^C",
 		EOFPrompt:           "exit",
@@ -67,7 +67,7 @@ func REPL() (err error) {
 	}(l)
 
 	// Prepare runtime environment
-	ctx := ginRuntime.NewContext(nil)
+	ctx := rumRuntime.NewContext(nil)
 	ctx.Set("exit", parser.NewAny(func() {
 		os.Exit(0)
 	}, nil))
