@@ -1,28 +1,28 @@
-# gin (Go in numbers)
+# rum
 
-[![Build Status](https://travis-ci.org/gin-lang/gin.svg?branch=master)](https://travis-ci.org/gin-lang/gin)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gin-lang/gin)](https://goreportcard.com/report/github.com/gin-lang/gin)
-[![Documentation](https://godoc.org/github.com/gin-lang/gin?status.svg)](http://godoc.org/github.com/gin-lang/gin)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/gin-lang/gin/LICENSE)
+[![Build Status](https://travis-ci.org/rumlang/rum.svg?branch=master)](https://travis-ci.org/rumlang/rum)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rumlang/rum)](https://goreportcard.com/report/github.com/rumlang/rum)
+[![Documentation](https://godoc.org/github.com/rumlang/rum?status.svg)](http://godoc.org/github.com/rumlang/rum)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/rumlang/rum/LICENSE)
 
 Free software environment for statistical computing
 
 ## Install
 
 ```
-go install github.com/gin-lang/gin
+go install github.com/rumlang/rum
 ```
 
 ## Run
 
 ```
-gin
+rum
 ```
 
 or
 
 ```
-go run gin.go
+go run rum.go
 ```
 
 ## Proposal syntax
@@ -76,12 +76,12 @@ go run gin.go
 
 ```
 
-## Using gin as a Go package
+## Using rum as a Go package
 
 ### Install
 
 ```
-go get github.com/gin-lang/gin
+go get github.com/rumlang/rum
 ```
 
 ### Example
@@ -93,7 +93,7 @@ import (
 	"bufio"
 	"strings"
 
-	"github.com/gin-lang/gin"
+	"github.com/rumlang/rum"
 )
 
 func main() {
@@ -103,7 +103,7 @@ func main() {
 )
 `
 	s := bufio.NewScanner(strings.NewReader(input))
-	vm := gin.New()
+	vm := rum.New()
 	err := vm.Run(s)
 	if err != nil {
 		panic(err)

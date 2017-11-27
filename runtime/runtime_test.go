@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/gin-lang/gin/parser"
+	"github.com/rumlang/rum/parser"
 )
 
 func mustParse(s string) parser.Value {
@@ -90,7 +90,7 @@ func TestValid(t *testing.T) {
 		`"plop"`:   "plop",
 		`"p\"lop"`: `p"lop`,
 		// Test eval
-		`(package "main" (let a '(+ 1 2)) (eval a))`: int64(3),
+		`(package "main" (let a (array (+ 1 2))) (eval a))`: int64(3),
 		// Test empty
 		`()`: nil,
 		// Test for
@@ -108,7 +108,7 @@ func TestValid(t *testing.T) {
 func TestValidList(t *testing.T) {
 	valid := map[string][]interface{}{
 		// Test single array notation
-		"'(1 2)": {int64(1), int64(2)},
+		"(array (1 2))": {int64(1), int64(2)},
 	}
 
 	for input, expected := range valid {

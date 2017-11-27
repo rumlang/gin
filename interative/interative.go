@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/chzyer/readline"
-	"github.com/gin-lang/gin/parser"
-	ginRuntime "github.com/gin-lang/gin/runtime"
+	"github.com/rumlang/rum/parser"
+	rumRuntime "github.com/rumlang/rum/runtime"
 )
 
 // ExpandFilename replace '~/' with the user home directory.
@@ -39,9 +39,14 @@ func filterInput(r rune) (rune, bool) {
 
 // REPL starts a full interpreter, accepting glop code on its prompt.
 func REPL() (err error) {
+
+	usr, err := user.Current()
+	if err != nil {
+		return
+	}
 	l, err := readline.NewEx(&readline.Config{
 		Prompt:              ">>> ",
-		HistoryFile:         "~/.gin_history",
+		HistoryFile:         usr.HomeDir + "/.rum_history",
 		AutoComplete:        readline.NewPrefixCompleter(),
 		InterruptPrompt:     "^C",
 		EOFPrompt:           "exit",
@@ -62,7 +67,7 @@ func REPL() (err error) {
 	}(l)
 
 	// Prepare runtime environment
-	ctx := ginRuntime.NewContext(nil)
+	ctx := rumRuntime.NewContext(nil)
 	ctx.Set("exit", parser.NewAny(func() {
 		os.Exit(0)
 	}, nil))
