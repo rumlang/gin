@@ -430,10 +430,17 @@ func For(ctx *Context, args ...parser.Value) parser.Value {
 		panic("TODO")
 	}
 	for _, s := range params[1:] {
-		vs := s.Value().([]parser.Value)
+		vs, ok := s.Value().([]parser.Value)
+		if !ok {
+			panic("TODO")
+		}
 		for _, v := range vs {
-			ts := Eval(ctx, args[0], v)
-			fmt.Println(ts.Value())
+			input := parser.NewAny([]parser.Value{args[0], v}, nil)
+			_, err := ctx.dispatch(input)
+			if err != nil {
+				err.(*Error).Stack = append(err.(*Error).Stack, input)
+				return parser.NewAny(nil, nil)
+			}
 		}
 	}
 	return parser.NewAny(nil, nil)
