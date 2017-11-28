@@ -418,30 +418,71 @@ func Eval(ctx *Context, raw ...parser.Value) parser.Value {
 
 // For implements for loop
 func For(ctx *Context, args ...parser.Value) parser.Value {
-	if len(args) < 2 {
+	if len(args) != 2 {
 		panic("Invalid arguments")
-	}
-	_, ok := args[0].Value().(parser.Identifier)
-	if !ok {
-		panic("TODO")
 	}
 	params, ok := args[1].Value().([]parser.Value)
 	if !ok {
 		panic("TODO")
 	}
-	for _, s := range params[1:] {
+	var p parser.Identifier
+	if p, ok = params[0].Value().(parser.Identifier); ok && p == parser.Identifier("array") {
+		ctx.forRange(args[0], params[1:])
+		return parser.NewAny(nil, nil)
+	}
+	var values []parser.Value
+	values, ok = args[0].Value().([]parser.Value)
+	if !ok {
+		panic("TODO")
+	}
+	var f parser.Value
+	if len(values) >= 2 {
+		_, ok = values[1].Value().(parser.Identifier)
+		if ok {
+			f = Eval(ctx, values...)
+		} else {
+			f = Eval(ctx, args[0])
+		}
+	} else {
+		f = Eval(ctx, args[0])
+	}
+	var b bool
+	if b, ok = f.Value().(bool); ok {
+		ctx.forWhile(b, params)
+		return parser.NewAny(nil, nil)
+	}
+	if !ok {
+		panic("TODO")
+	}
+	return parser.NewAny(nil, nil)
+}
+
+// forRange implements for range
+func (c *Context) forRange(f parser.Value, array []parser.Value) {
+	for _, s := range array {
 		vs, ok := s.Value().([]parser.Value)
 		if !ok {
 			panic("TODO")
 		}
 		for _, v := range vs {
-			input := parser.NewAny([]parser.Value{args[0], v}, nil)
-			_, err := ctx.dispatch(input)
+			input := parser.NewAny([]parser.Value{f, v}, nil)
+			_, err := c.dispatch(input)
 			if err != nil {
 				err.(*Error).Stack = append(err.(*Error).Stack, input)
-				return parser.NewAny(nil, nil)
+				return
 			}
 		}
 	}
-	return parser.NewAny(nil, nil)
+}
+
+// forWhile implements forWhile
+func (c *Context) forWhile(ok bool, args []parser.Value) {
+	for ok {
+		input := parser.NewAny(args, nil)
+		_, err := c.dispatch(input)
+		if err != nil {
+			err.(*Error).Stack = append(err.(*Error).Stack, input)
+			return
+		}
+	}
 }
