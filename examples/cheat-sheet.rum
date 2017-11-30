@@ -2,7 +2,7 @@
   ; Canonical example
   (print "Hello, World!")
 
-  ; Simply print '42' on stdout
+  ; Simply print '3' on stdout
   (print (+ 1 2))
 
   ; Create a function, run it and print the result.
