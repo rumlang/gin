@@ -75,14 +75,11 @@ func REPL() (err error) {
 	// log.Println(l.Stderr())
 	for {
 		line, err := l.Readline()
-		if err == readline.ErrInterrupt {
-			if len(line) == 0 {
+		if err == readline.ErrInterrupt || err == io.EOF {
+			if len(line) == 0 || err == io.EOF {
 				break
-			} else {
-				continue
 			}
-		} else if err == io.EOF {
-			break
+			continue
 		}
 
 		line = strings.TrimSpace(line)
@@ -93,14 +90,14 @@ func REPL() (err error) {
 		// Parsing
 		var out parser.Value
 		root, err := parser.Parse(parser.NewSource(line))
-		if err == nil {
-			// Executing
-			out, err = ctx.TryEval(root)
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "%v\n", err)
-				continue
-			}
-		} else {
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			continue
+		}
+
+		// Executing
+		out, err = ctx.TryEval(root)
+		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			continue
 		}

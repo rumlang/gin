@@ -81,11 +81,10 @@ func (l *lexer) peek() rune {
 func (l *lexer) advance() rune {
 	r := l.next
 	l.token.text = append(l.token.text, r)
+	l.nextCol++
 	if r == '\n' {
 		l.line++
 		l.nextCol = 0
-	} else {
-		l.nextCol++
 	}
 	l.next = <-l.scan
 	return r
@@ -134,28 +133,29 @@ func (l *lexer) stateIdentifier() stateFn {
 		return next
 	}
 
+	token.id = tokIdentifier
+	// Use []rune for identifiers?
+	token.value = string(token.text)
+
 	// Check the first rune to determine whether it is just an arbitrary
 	// identifier or a number. Anything starting with [+-.]?[0-9] is considered a
 	// number.
 	if (len(token.text) > 1 && (token.text[0] == '+' || token.text[0] == '-' || token.text[0] == '.') && unicode.IsDigit(token.text[1])) || unicode.IsDigit(token.text[0]) {
 		// Try first to parse it as an integer and if it does not work, try as a
 		// float. This is ugly and number management should probably be rewritten.
+		token.id = tokInteger
 		i, err := strconv.ParseInt(string(token.text), 10, 64)
-		if err == nil {
-			token.id = tokInteger
-			token.value = i
-		} else {
+		if err != nil {
 			f, err := strconv.ParseFloat(string(token.text), 64)
 			if err != nil {
 				panic(err) // TODO
 			}
 			token.id = tokFloat
 			token.value = f
+			l.tokens <- token
+			return next
 		}
-	} else {
-		token.id = tokIdentifier
-		// Use []rune for identifiers?
-		token.value = string(token.text)
+		token.value = i
 	}
 	l.tokens <- token
 	return next

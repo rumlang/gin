@@ -40,14 +40,6 @@ func main() {
 			os.Exit(1)
 		}
 		input = string(data)
-	} else if input == "-" {
-		// Get code from stdin if asked.
-		data, err := ioutil.ReadAll(os.Stdin)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "unable to read stdin: %v", err)
-			os.Exit(1)
-		}
-		input = string(data)
 	}
 
 	// Parse & exec.

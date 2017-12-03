@@ -77,20 +77,7 @@ type tokenInfo struct {
 func (t tokenInfo) Nud(ctx Context) interface{} {
 	switch t.id {
 	case tokOpen:
-		var sublist []Value
-		if ctx.Peek().(tokenInfo).id != tokClose {
-			sublist = ctx.Expression(tokenPriorities[tokClose]).([]Value)
-		}
-		t := ctx.Peek().(tokenInfo)
-		if t.id != tokClose {
-			ctx.Error(Error{
-				Msg:  fmt.Sprintf("invalid token - expected ')', got: %q", string(t.text)),
-				Code: ErrMissingClosingParenthesis,
-				Ref:  t.ref,
-			})
-		} else {
-			ctx.Advance()
-		}
+		var sublist = ftokOpen(ctx)
 		return []Value{NewAny(sublist, t.ref)}
 	// case tokClose: // Shoud never happen
 	case tokArray:
@@ -116,26 +103,30 @@ func (t tokenInfo) Nud(ctx Context) interface{} {
 	return []Value{}
 }
 
+func ftokOpen(ctx Context) (sublist []Value) {
+	if ctx.Peek().(tokenInfo).id != tokClose {
+		sublist = ctx.Expression(tokenPriorities[tokClose]).([]Value)
+	}
+	t := ctx.Peek().(tokenInfo)
+	if t.id != tokClose {
+		ctx.Error(Error{
+			Msg:  fmt.Sprintf("invalid token - expected ')', got: %q", string(t.text)),
+			Code: ErrMissingClosingParenthesis,
+			Ref:  t.ref,
+		})
+		return
+	}
+	ctx.Advance()
+	return
+}
+
 // Led implements the Token interface for the top down parser.
 // It always returns a []Value. In case of errors, it will add an error through
 // the context and ignore the token.
 func (t tokenInfo) Led(ctx Context, left interface{}) interface{} {
 	switch t.id {
 	case tokOpen:
-		var sublist []Value
-		if ctx.Peek().(tokenInfo).id != tokClose {
-			sublist = ctx.Expression(tokenPriorities[tokClose]).([]Value)
-		}
-		t := ctx.Peek().(tokenInfo)
-		if t.id != tokClose {
-			ctx.Error(Error{
-				Msg:  fmt.Sprintf("invalid token - expected ')', got: %q", string(t.text)),
-				Code: ErrMissingClosingParenthesis,
-				Ref:  t.ref,
-			})
-		} else {
-			ctx.Advance()
-		}
+		var sublist = ftokOpen(ctx)
 		return append(left.([]Value), NewAny(sublist, t.ref))
 	// case tokClose: // Should never happen.
 	case tokArray:

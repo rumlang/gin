@@ -45,15 +45,15 @@ type Error struct {
 func (e *Error) String() string {
 	out := fmt.Sprintf("runtime error: %s[%d] - %s\n", e.Code, e.Code, e.Msg)
 
-	first := true
+	var (
+		triggeredAt = "  # triggered at:\n"
+		calledFrom  = "  # called from:\n"
+		msg         = &triggeredAt
+	)
 	for _, v := range e.Stack {
-		if first {
-			out += "  # triggered at:\n"
-			first = false
-		} else {
-			out += "  # called from:\n"
-		}
+		out += *msg
 		out += v.Ref().Context("    ")
+		msg = &calledFrom
 	}
 
 	if e.Code == ErrPanic {
@@ -133,9 +133,10 @@ func (c *Context) dispatch(input parser.Value) (parser.Value, error) {
 				// circumvent the special value with nil which is otherwise translated to
 				// an invalid element.
 				args = append(args, reflect.ValueOf(&data).Elem())
-			} else {
-				args = append(args, reflect.ValueOf(data))
+				continue
 			}
+			args = append(args, reflect.ValueOf(data))
+
 		}
 		result := reflect.ValueOf(fn.Value()).Call(args)
 		if len(result) == 0 {
@@ -172,15 +173,14 @@ func (c *Context) eval(input parser.Value) (parser.Value, error) {
 	}()
 
 	if recov != nil {
+		err = &Error{
+			Code:           ErrPanic,
+			Msg:            fmt.Sprintf("%v", recov),
+			PanicRecovered: recov,
+			PanicStack:     stack,
+		}
 		if details, ok := recov.(*Error); ok {
 			err = details
-		} else {
-			err = &Error{
-				Code:           ErrPanic,
-				Msg:            fmt.Sprintf("%v", recov),
-				PanicRecovered: recov,
-				PanicStack:     stack,
-			}
 		}
 	}
 

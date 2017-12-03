@@ -48,21 +48,19 @@ func (s *Source) Scan() <-chan rune {
 
 // Line returns the line corresponding to the 0-based provided index. Returns a
 // non-nil error if the value is out of bound.
-func (s *Source) Line(i int) ([]rune, error) {
-	if i < 0 || i >= len(s.lines) {
-		return nil, fmt.Errorf("out of bound line %d (source has %d lines)", i, len(s.lines))
+func (s *Source) Line(i int) (line []rune, err error) {
+	lenLines := len(s.lines)
+	if i < 0 || i >= lenLines {
+		err = fmt.Errorf("out of bound line %d (source has %d lines)", i, len(s.lines))
+		return
 	}
-
 	begin := s.lines[i]
-	var end int
-	if i == len(s.lines)-1 {
-		// Last line
-		end = len(s.data)
-	} else {
-		// Other lines
+	end := len(s.data) // last line
+	if i != lenLines-1 {
 		end = s.lines[i+1]
 	}
-	return s.data[begin:end], nil
+	line = s.data[begin:end]
+	return
 }
 
 // NewSource creates a new source object from the provided utf8 string. It will
@@ -120,20 +118,21 @@ func (ref *SourceRef) Context(prefix string) string {
 
 // Parse will take the provided source, parse it, and ensure that only one root
 // node is returned.
-func Parse(src *Source) (Value, error) {
+func Parse(src *Source) (ret Value, err error) {
 	r, errs := TopDownParse(newLexer(src))
 	result := r.([]Value)
-	var n Value
 	if len(result) == 0 {
-		errs = append(errs, errors.New("no node found"))
-	} else if len(result) != 1 {
-		errs = append(errs, fmt.Errorf("obtained more than one node: %v", result))
-	} else {
-		n = result[0]
+		err = MultiError{Errors: append(errs, errors.New("no node found"))}
+		return
 	}
-
+	if len(result) != 1 {
+		err = MultiError{Errors: append(errs, fmt.Errorf("obtained more than one node: %v", result))}
+		return
+	}
 	if len(errs) > 0 {
-		return n, MultiError{Errors: errs}
+		err = MultiError{Errors: errs}
+		return
 	}
-	return n, nil
+	ret = result[0]
+	return
 }
