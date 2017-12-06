@@ -103,11 +103,9 @@ func (l *lexer) accept() tokenInfo {
 }
 
 // stateIdentifier parses arbitrary strings & numbers.
-func (l *lexer) stateIdentifier() stateFn {
-	var next stateFn
+func (l *lexer) stateIdentifier() (next stateFn) {
 	for next == nil {
 		r := l.peek()
-
 		switch {
 		case r == '(':
 			next = l.stateOpen
@@ -130,7 +128,7 @@ func (l *lexer) stateIdentifier() stateFn {
 
 	// Ignore empty transition - they're just a parsing artifact.
 	if len(token.text) == 0 {
-		return next
+		return
 	}
 
 	token.id = tokIdentifier
@@ -153,12 +151,12 @@ func (l *lexer) stateIdentifier() stateFn {
 			token.id = tokFloat
 			token.value = f
 			l.tokens <- token
-			return next
+			return
 		}
 		token.value = i
 	}
 	l.tokens <- token
-	return next
+	return
 }
 
 func (l *lexer) stateOpen() stateFn {
