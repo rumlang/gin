@@ -1,6 +1,9 @@
 package runtime
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 // OpAdd implements the '+' function. It tries to determine automatically the
 // type based on the first argument.
@@ -111,6 +114,14 @@ func OpMulFloat64(values ...float64) float64 {
 		total *= v
 	}
 	return total
+}
+
+// OpPow implements exponentiation '**' function.
+func OpPow(values ...float64) float64 {
+	if len(values) < 1 {
+		panic("Function '**' should take two argument")
+	}
+	return math.Pow(values[0], values[1])
 }
 
 // OpEqual implements the == comparaison operator. It can work on more than 2
