@@ -244,6 +244,7 @@ func NewContext(parent *Context) *Context {
 		"<=":       OpLessEqual,
 		">":        OpGreater,
 		">=":       OpGreaterEqual,
+		"sprintf":  Sprintf,
 	}
 
 	for name, value := range defaults {
@@ -396,6 +397,12 @@ func Print(args ...interface{}) {
 		fmt.Printf("%v", v)
 	}
 	fmt.Printf("\n")
+}
+
+// Sprintf implements the sprintf function.
+func Sprintf(args ...interface{}) string {
+	format := args[0].(string)
+	return fmt.Sprintf(format, args[1:]...)
 }
 
 // Eval implements the eval function.

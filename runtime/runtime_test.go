@@ -95,6 +95,9 @@ func TestValid(t *testing.T) {
 		`()`: nil,
 		// Test for
 		`(for print (array (10 20 30)))`: nil,
+		// Test sprintf
+		`(sprintf "%02d %02d" 1 2)`: "01 02",
+		`(sprintf "%02X" 255)`:      "FF",
 	}
 
 	for input, expected := range valid {
