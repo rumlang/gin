@@ -238,7 +238,6 @@ func NewContext(parent *Context) *Context {
 		"*int64":   OpMulInt64,
 		"*float64": OpMulFloat64,
 		"==":       OpEqual,
-		"eq?":      OpEqual,
 		"!=":       OpNotEqual,
 		"<":        OpLess,
 		"<=":       OpLessEqual,
