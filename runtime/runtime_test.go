@@ -96,8 +96,16 @@ func TestValid(t *testing.T) {
 		// Test for
 		`(for print (array (10 20 30)))`: nil,
 		// Test sprintf
-		`(sprintf "%02d %02d" 1 2)`: "01 02",
-		`(sprintf "%02X" 255)`:      "FF",
+		`(sprintf "%02d %02d" 1 2)`:                               "01 02",
+		`(sprintf "%02X" 255)`:                                    "FF",
+		`(sprintf "%0.9g" 1.99999999)`:                            "1.99999999",
+		`(sprintf "%v" 1.99999999)`:                               "1.99999999",
+		`(sprintf "%v" 1.9999999999999998)`:                       "1.9999999999999998",
+		`(sprintf "10 is %q char" 10)`:                            "10 is '\\n' char",
+		`(sprintf "%% literal percent sign; not literal %v" "%")`: `% literal percent sign; not literal %`,
+		`(sprintf "%t is not %t" true false)`:                     "true is not false",
+		`(sprintf "%T" 1.99999999)`:                               "float64",
+		`(sprintf "%T" true)`:                                     "bool",
 	}
 
 	for input, expected := range valid {
