@@ -93,8 +93,10 @@ func TestValid(t *testing.T) {
 		`(package "main" (let a (array (+ 1 2))) (eval a))`: int64(3),
 		// Test empty
 		`()`: nil,
-		// Test for
+		// Test for range
 		`(for print (array (10 20 30)))`: nil,
+		// Test for while
+		`(for (== 1 2) (print "while"))`: nil,
 	}
 
 	for input, expected := range valid {
