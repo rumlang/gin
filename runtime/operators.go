@@ -11,41 +11,24 @@ func OpAdd(values ...interface{}) interface{} {
 	if len(values) < 1 {
 		panic("Function '+' should take at least one argument")
 	}
-
-	switch values[0].(type) {
-	case int64:
-		var total int64
-		for _, v := range values {
-			total += v.(int64)
+	var (
+		totalInt   int64
+		totalFloat float64
+	)
+	for i, v := range values {
+		switch values[i].(type) {
+		case int64:
+			totalInt += v.(int64)
+		case float64:
+			totalFloat += v.(float64)
+		default:
+			panic(fmt.Sprintf("Unable to add values of type %T", values[0]))
 		}
-		return total
-	case float64:
-		var total float64
-		for _, v := range values {
-			total += v.(float64)
-		}
-		return total
-	default:
-		panic(fmt.Sprintf("Unable to add values of type %T", values[0]))
 	}
-}
-
-// OpAddInt64 implements '+int64' function.
-func OpAddInt64(values ...int64) int64 {
-	var total int64
-	for _, v := range values {
-		total += v
+	if totalFloat > 0 {
+		return totalFloat + float64(totalInt)
 	}
-	return total
-}
-
-// OpAddFloat64 implements '+float64' function.
-func OpAddFloat64(values ...float64) float64 {
-	var total float64
-	for _, v := range values {
-		total += v
-	}
-	return total
+	return totalInt
 }
 
 // OpSub implements the '-' function. It tries to determine automatically the

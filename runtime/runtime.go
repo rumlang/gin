@@ -231,8 +231,6 @@ func NewContext(parent *Context) *Context {
 		"true":     true,
 		"false":    false,
 		"+":        OpAdd,
-		"+int64":   OpAddInt64,
-		"+float64": OpAddFloat64,
 		"-":        OpSub,
 		"*":        OpMul,
 		"*int64":   OpMulInt64,
