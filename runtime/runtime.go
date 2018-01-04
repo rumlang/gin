@@ -239,38 +239,40 @@ func NewContext(parent *Context) *Context {
 		env:    make(map[parser.Identifier]parser.Value),
 	}
 
-	defaults := map[parser.Identifier]interface{}{
-		"package":  Package,
-		"array":    Internal(Array),
-		"let":      Internal(Let),
-		"if":       Internal(If),
-		"def":      Internal(Def),
-		"lambda":   Internal(Lambda),
-		"eval":     Internal(Eval),
-		"for":      Internal(For),
-		"panic":    Panic,
-		"len":      Length,
-		"print":    Print,
-		"type":     Type,
-		"true":     true,
-		"false":    false,
-		"+":        OpAdd,
-		"-":        OpSub,
-		"*":        OpMul,
-		"*int64":   OpMulInt64,
-		"*float64": OpMulFloat64,
-		"**":       OpPow,
-		"==":       OpEqual,
-		"!=":       OpNotEqual,
-		"<":        OpLess,
-		"<=":       OpLessEqual,
-		">":        OpGreater,
-		">=":       OpGreaterEqual,
-		"sprintf":  Sprintf,
-	}
+	if parent == nil {
+		defaults := map[parser.Identifier]interface{}{
+			"package":  Package,
+			"array":    Internal(Array),
+			"let":      Internal(Let),
+			"if":       Internal(If),
+			"def":      Internal(Def),
+			"lambda":   Internal(Lambda),
+			"eval":     Internal(Eval),
+			"for":      Internal(For),
+			"panic":    Panic,
+			"len":      Length,
+			"print":    Print,
+			"type":     Type,
+			"true":     true,
+			"false":    false,
+			"+":        OpAdd,
+			"-":        OpSub,
+			"*":        OpMul,
+			"*int64":   OpMulInt64,
+			"*float64": OpMulFloat64,
+			"**":       OpPow,
+			"==":       OpEqual,
+			"!=":       OpNotEqual,
+			"<":        OpLess,
+			"<=":       OpLessEqual,
+			">":        OpGreater,
+			">=":       OpGreaterEqual,
+			"sprintf":  Sprintf,
+		}
 
-	for name, value := range defaults {
-		c.env[name] = parser.NewAny(value, nil)
+		for name, value := range defaults {
+			c.env[name] = parser.NewAny(value, nil)
+		}
 	}
 
 	return c
