@@ -271,7 +271,7 @@ func TestInvoke(t *testing.T) {
 		"(let respbytes (ioutil/ReadAll (. resp Body)))",
 		"(let buf (bytes/NewBuffer respbytes))",
 		"(. buf String)",
-		//"(print (. buf String))",
+		"(print (. buf String))",
 	}
 
 	RunSExpressions(c, exprs, t)
