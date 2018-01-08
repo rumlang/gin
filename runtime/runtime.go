@@ -98,8 +98,12 @@ func (c *Context) Get(id parser.Identifier) parser.Value {
 
 // Set an iten in parser function map
 func (c *Context) Set(id parser.Identifier, v parser.Value) parser.Value {
-	c.env[id] = v
-	return v
+	_, ok := c.env[id]
+	if !ok {
+		c.env[id] = v
+		return v
+	}
+	panic(fmt.Sprintf("Variable called %s just has a value in that scope", id))
 }
 
 // SetFn an function in parser function map
@@ -362,7 +366,8 @@ func Def(ctx *Context, args ...parser.Value) parser.Value {
 		}
 		return nested.MustEval(implValue)
 	}
-	return ctx.Set(id, parser.NewAny(Internal(impl), nil))
+	ctx.env[id] = parser.NewAny(Internal(impl), nil)
+	return ctx.env[id]
 }
 
 // Lambda anonymous functions that are evaluated only when they are encountered in the program

@@ -94,7 +94,7 @@ func TestValid(t *testing.T) {
 		`(package "main" (print 1 2))`:     nil,
 		// Test 'let'
 		`(package "main" (let a 5) a)`:           int64(5),
-		`(package "main" (let a 5) (let a 4) a)`: int64(4),
+		`(package "main" (let a 5) (let b 4) b)`: int64(4),
 		// Test 'if'
 		"(if true 7)":    int64(7),
 		"(if false 7)":   nil,
@@ -275,4 +275,29 @@ func TestInvoke(t *testing.T) {
 	}
 
 	RunSExpressions(c, exprs, t)
+}
+
+func TestImmutable(t *testing.T) {
+	s := "(package \"main\" (let a 5) (let a 4) a)"
+	var r interface{}
+	func() {
+		defer func() {
+			r = recover()
+		}()
+		mustEval(s)
+	}()
+	if r == nil {
+		t.Fatalf("%q should have generated a panic.", s)
+	}
+
+	s = `(package "main" (def d(n) (+ n n)) (def d(n) (* 2 n)) (d 3))`
+	func() {
+		defer func() {
+			r = recover()
+		}()
+		mustEval(s)
+	}()
+	if r != nil {
+		t.Fatalf("%q not should have generated a panic.", s)
+	}
 }
