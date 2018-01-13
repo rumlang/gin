@@ -254,6 +254,7 @@ func NewContext(parent *Context) *Context {
 			"eval":     Internal(Eval),
 			"for":      Internal(For),
 			".":        Internal(Invoke),
+			"import":   Internal(Import),
 			"panic":    Panic,
 			"len":      Length,
 			"print":    Print,
@@ -297,6 +298,24 @@ func Package(name string, values ...interface{}) interface{} {
 		return nil
 	}
 	return values[len(values)-1]
+}
+
+// Import implements the import package feature.
+func Import(ctx *Context, args ...parser.Value) parser.Value {
+	if len(args) == 0 {
+		panic("Invalid arguments")
+	}
+
+	packageName, ok := args[0].Value().(string)
+	if !ok {
+		panic("invalid package name")
+	}
+	LoadStdLib(packageName, ctx)
+	v, err := ctx.TryEval(args[0])
+	if err != nil {
+		panic(err.Error())
+	}
+	return v
 }
 
 // Let implements the let reserved word.
