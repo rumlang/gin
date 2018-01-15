@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/rumlang/rum/libs"
+
 	"github.com/rumlang/rum/interative"
 	"github.com/rumlang/rum/parser"
 	"github.com/rumlang/rum/runtime"
@@ -50,6 +52,7 @@ func main() {
 	}
 
 	ctx := runtime.NewContext(nil)
+	libs.LoadStdLib(ctx)
 	if _, err = ctx.TryEval(root); err != nil {
 		fmt.Fprintf(os.Stderr, "execution failed: %v", err)
 		os.Exit(1)

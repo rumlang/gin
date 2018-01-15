@@ -1,0 +1,55 @@
+package libs
+
+import (
+	"strings"
+
+	"github.com/rumlang/rum/runtime"
+)
+
+//LoadStrings load the library with strings utils
+func LoadStrings(ctx *runtime.Context) {
+	ctx.SetFn("strings.Compare", strings.Compare, runtime.CheckArity(2))
+	ctx.SetFn("strings.Contains", strings.Contains, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/ContainsAny", strings.ContainsAny, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/ContainsRune", strings.ContainsRune, runtime.CheckArity(2))
+	ctx.SetFn("strings.Count", strings.Count, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/EqualFold", strings.EqualFold, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/Fields", strings.Fields, runtime.CheckArity(1))
+	//TODO ctx.SetFn("strings/FieldsFunc", strings.FieldFunc, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/HasPrefix", strings.HasPrefix,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/HasSuffix", strings.HasSuffix,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/Index", strings.Index,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/IndexAny", strings.IndexAny,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/IndexByte", strings.IndexByte,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/IndexFunc", strings.IndexFunc,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/IndexRune", strings.IndexRune,runtime.CheckArity(2))
+	ctx.SetFn("strings.Join", strings.Join, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/LastIndex", strings.LastIndex, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/LastIndexAny", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/LastIndexByte", runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/LastIndexFunc", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/Map", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/Repeat", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/Replace", ...,runtime.CheckArity(4))
+	ctx.SetFn("strings.Split", strings.Split, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/SplitAfter", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/SplitAfterN", ...,runtime.CheckArity(3))
+	//TODO ctx.SetFn("strings/SplitN", ...,runtime.CheckArity(3))
+	ctx.SetFn("strings.Title", strings.Title, runtime.CheckArity(1))
+	ctx.SetFn("strings.ToLower", strings.ToLower, runtime.CheckArity(1))
+	//TODO ctx.SetFn("strings/ToLowerSpecial", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/ToTitle", ...,runtime.CheckArity(1))
+	//TODO ctx.SetFn("strings/ToTitleSpecial", ...,runtime.CheckArity(2))
+	ctx.SetFn("strings.ToUpper", strings.ToUpper, runtime.CheckArity(1))
+	//TODO ctx.SetFn("strings/ToUpperSpecial", ...,runtime.CheckArity(2))
+	ctx.SetFn("strings.Trim", strings.Trim, runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/TrimFunc", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/TrimLeft", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/TrimLeftFunc", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/TrimPrefix", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/TrimRight", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/TrimRightFunc", ...,runtime.CheckArity(2))
+	//TODO ctx.SetFn("strings/TrimSpace", runtime.CheckArity(1))
+	//TODO ctx.SetFn("strings/TrimSuffix", ...,runtime.CheckArity(2))
+	ctx.SetFn("strings.NewReader", strings.NewReader, runtime.CheckArity(1))
+}

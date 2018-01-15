@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/chzyer/readline"
+	"github.com/rumlang/rum/libs"
 	"github.com/rumlang/rum/parser"
 	rumRuntime "github.com/rumlang/rum/runtime"
 )
@@ -68,6 +69,7 @@ func REPL() (err error) {
 
 	// Prepare runtime environment
 	ctx := rumRuntime.NewContext(nil)
+	libs.LoadStdLib(ctx)
 	ctx.Set("exit", parser.NewAny(func() {
 		os.Exit(0)
 	}, nil))
