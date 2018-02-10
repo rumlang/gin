@@ -13,6 +13,10 @@ import (
 	rumRuntime "github.com/rumlang/rum/runtime"
 )
 
+const (
+	defaultPrompt = ">>> "
+)
+
 // ExpandFilename replace '~/' with the user home directory.
 func ExpandFilename(s string, u *user.User) (string, error) {
 	if strings.HasPrefix(s, "~/") {
@@ -45,7 +49,7 @@ func REPL() (err error) {
 		return
 	}
 	l, err := readline.NewEx(&readline.Config{
-		Prompt:              ">>> ",
+		Prompt:              defaultPrompt,
 		HistoryFile:         usr.HomeDir + "/.rum_history",
 		AutoComplete:        readline.NewPrefixCompleter(),
 		InterruptPrompt:     "^C",
@@ -73,23 +77,37 @@ func REPL() (err error) {
 	}, nil))
 
 	// log.Println(l.Stderr())
+	var src string
 	for {
 		line, err := l.Readline()
 		if err == readline.ErrInterrupt || err == io.EOF {
-			if len(line) == 0 || err == io.EOF {
+			if (line == "" && src == "") || err == io.EOF {
 				break
 			}
+			src = ""
+			l.SetPrompt(defaultPrompt)
 			continue
 		}
 
 		line = strings.TrimSpace(line)
-		if len(line) == 0 {
+		if line == "" {
 			continue
 		}
+		src += line + "\n"
+		nListEnd := strings.Count(src, "(") - strings.Count(src, ")")
+		if src != "" {
+			l.SetPrompt(fmt.Sprintf("--> %v", strings.Repeat("  ", nListEnd)))
+		}
+		if nListEnd != 0 {
+			continue
+		}
+		l.SetPrompt(defaultPrompt)
 
+		srcAux := src
+		src = ""
 		// Parsing
 		var out parser.Value
-		root, err := parser.Parse(parser.NewSource(line))
+		root, err := parser.Parse(parser.NewSource(srcAux))
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			continue
