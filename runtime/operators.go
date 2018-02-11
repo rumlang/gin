@@ -131,6 +131,14 @@ func OpEqual(values ...interface{}) interface{} {
 			}
 		}
 		return true
+	case string:
+		ref := values[0].(string)
+		for _, v := range values[1:] {
+			if ref != v.(string) {
+				return false
+			}
+		}
+		return true
 	default:
 		panic(fmt.Sprintf("Unable to compare values of type %T", values[0]))
 	}

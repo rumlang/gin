@@ -67,6 +67,8 @@ func TestValid(t *testing.T) {
 		"(== 3 3 3)":        true,
 		"(== 3.0 3.0)":      true,
 		"(== 3.0 2.0)":      false,
+		`(== "a" "a")`:      true,
+		`(== "a" "b")`:      false,
 		"(!= 3 2)":          true,
 		"(!= 3 3)":          false,
 		"(!= 3.0 3.0)":      false,
