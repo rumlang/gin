@@ -43,10 +43,10 @@ go run rum.go
 ```
 (package "main"
   ; load file on this code
-  (load 'lerolero) ; ./lerolero.gl
+  (load lerolero) ; ./lerolero.rum
 
   ; import package lerolero and used methods
-  (import test 'lerolero.test) ; ./lerolero/test.lg
+  (import test lerolero.test) ; ./lerolero/test.rum
   (print (test.Test))
 
   ; set lets
@@ -55,7 +55,7 @@ go run rum.go
 
   ; create function
   (def hi()
-    'Hello)
+    "Hello")
   (print hi)
 
   ; create function (by lambda)
@@ -64,28 +64,26 @@ go run rum.go
   (print (area 10.0))
 
   ; create loops with for
-  (for (print 'hello)) ; will loop while expression or function return false
-  (for area (10.0 20.0 30.0) ; will interact on the list elements
+  (for (print "hello")) ; will loop while expression or function return false
+  (for area (10.0 20.0 30.0)) ; will interact on the list elements
   (for (let a 1)
-    (= a 10)
+    (== a 10)
       (let a (+ a 1)
       (print a)))
 
   ; create if
-  (if (= a 10)        ; if a is equal to 10
-    (print 'Hello))   ; print Hello
+  (if (== a 10)       ; if a is equal to 10
+    (print "Hello"))  ; print Hello
 
-  (if (= a 'good)     ; if a is equal to "good"
-    (print 'good)     ; print "good"
-    (else             ; otherwise
-      (print 'bad)))  ; print "bad"
+  (if (== a "good")   ; if a is equal to "good"
+    (print "good")    ; print "good"
+    (print 'bad))     ; otherwise print "bad"
 
-  (if (= a 'good)     ; if a is equal to "good"
-    (print 'good)     ; print "good"
-    (else (= a 'bad)  ; if not and is equal to "bad"
-      (print 'bad))   ; print "bad"
-    (else             ; otherwise
-      (print 'ugly))) ; print "ugly"
+  (if (== a "good")   ; if a is equal to "good"
+    (print "good")    ; print "good"
+    (if (== a "bad")  ; if not and is equal to "bad"
+      (print "bad")   ; print "bad"
+      (print "ugly")) ; otherwise print "ugly"
 
 ```
 
