@@ -1,10 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/rumlang/rum/interative"
 	"github.com/rumlang/rum/parser"
@@ -31,15 +32,17 @@ func main() {
 
 	// By default run the code from -e flag.
 	var input = ""
-
 	if len(flag.Args()) > 0 {
 		// Get code from a file if specified
-		data, err := ioutil.ReadFile(flag.Args()[0])
-		if err != nil {
+		scanner := bufio.NewScanner(strings.NewReader(flag.Args()[0]))
+		if err := scanner.Err(); err != nil {
 			fmt.Fprintf(os.Stderr, "unable to read %q: %v\n", flag.Args()[0], err)
 			os.Exit(1)
 		}
-		input = string(data)
+		// Scan the file and add lines to input
+		for scanner.Scan() {
+			input += scanner.Text() + "\n"
+		}
 	}
 
 	// Parse & exec.
