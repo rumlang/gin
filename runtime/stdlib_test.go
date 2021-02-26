@@ -56,13 +56,13 @@ func TestStrings(t *testing.T) {
 		"(strings.Trim \" !!! Achtung! Achtung! !!!\" \" !\")": "Achtung! Achtung",
 		"(strings.NewReader \"0123456789\")":                   strings.NewReader("0123456789"),
 	}
-	checkSExprs(t, `(import "strings")`, valid)
+	checkSExprs(t, `(import strings)`, valid)
 }
 
 func TestCSV(t *testing.T) {
 	valid := map[string]interface{}{
-		`(. (encoding/csv.NewReader (strings.NewReader "1,2,3,4")) ReadAll)`: [][]string{{"1", "2", "3", "4"}},
+		`(. (csv.NewReader (strings.NewReader "1,2,3,4")) ReadAll)`: [][]string{{"1", "2", "3", "4"}},
 	}
-	checkSExprs(t, `(import "strings" 
-		                    "csv")`, valid)
+	checkSExprs(t, `(import strings
+		                    csv)`, valid)
 }
