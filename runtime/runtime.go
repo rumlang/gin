@@ -309,25 +309,31 @@ func Package(name string, values ...interface{}) interface{} {
 }
 
 // Import implements the import package feature.
-func Import(ctx *Context, args ...parser.Value) parser.Value {
+func Import(ctx *Context, args ...parser.Value) (v parser.Value) {
 	if len(args) == 0 {
 		panic("Invalid arguments")
 	}
 
-	var v parser.Value
-	var err error
-	for idx := range args {
-		packageName, ok := args[idx].Value().(string)
-		if !ok {
-			panic("invalid package name")
+	for key := range args {
+		var packageID parser.Identifier
+		var packageName parser.Value
+		var packageNameStr string
+		input := args[key]
+		switch data := input.Value().(type) {
+		case []parser.Value:
+			packageID = data[0].Value().(parser.Identifier)
+			packageName = data[1]
+			packageNameStr = data[1].Value().(string)
+		case parser.Identifier:
+			packageID = data
+			packageName = input
+			packageNameStr = data.String()
+		default:
+			panic(fmt.Sprintf("package %s not found", Type(args[key].Value())))
 		}
-		loadStdLib(packageName, ctx)
-		v, err = ctx.TryEval(args[idx])
-		if err != nil {
-			panic(err.Error())
-		}
+		loadStdLib(packageNameStr, ctx, packageID)
+		v = ctx.Set(packageID, packageName)
 	}
-
 	return v
 }
 
@@ -535,7 +541,6 @@ func Invoke(ctx *Context, args ...parser.Value) parser.Value {
 
 	obj := ctx.MustEval(args[0]).Value()
 	descriptor := args[1].String()
-	descriptor = descriptor[5 : len(descriptor)-1]
 
 	method := reflect.ValueOf(obj).MethodByName(descriptor)
 	if method.IsValid() {

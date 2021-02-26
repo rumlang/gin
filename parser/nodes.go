@@ -19,7 +19,8 @@ type Value interface {
 type Identifier string
 
 func (id Identifier) String() string {
-	return fmt.Sprintf("<id>%q", string(id))
+	// return fmt.Sprintf("<id>%q", string(id))
+	return string(id)
 }
 
 // Any implements Value interface, provided an encapsulation for any valid
