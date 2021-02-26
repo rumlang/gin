@@ -1,30 +1,39 @@
 (package "main"
+  ;; imports stdlibs
+  (import
+    (str "strings")
+    csv)
   ; Canonical example
-  (print "Hello, World!")
+  (println "Hello, World!")
 
   ; Simply print '3' on stdout
-  (print (+ 1 2))
+  (println (+ 1 2))
 
   ; Create a function, run it and print the result.
   (let area
     (lambda (r) (* 3.141592653 (* r r))))
-  (print (area 10.0))
+  (println (area 10.0))
 
   (def area(r)
     (* 3.141592653 (* r r)))
-  (print (area 100.0))
+  (println (area 100.0))
 
   ; Quote
   (let plop (array (a b c)))
-  (print plop)
+  (println plop)
 
   ; Eval
   (let foo (array (+ 1 a)))
   (let a 42)
-  (print (eval foo))  ; prints 43
+  (println (eval foo))  ; prints 43
   ; (let a 11) ; not immutable support
-  (print (eval foo))  ; prints 12
+  (println (eval foo))  ; prints 12
+
+  ;; use strings package with alias str
+  (println (str.Contains "rumlang" "rum"))
+  ;; use csv package by example
+  (println "csv read all:" (. (csv.NewReader (str.NewReader "1,2,3,4")) ReadAll))
 
   ; create sub package and print let main package
-  (package "submain" (print a))
+  (package "submain" (println a))
 )
