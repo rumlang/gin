@@ -82,11 +82,28 @@ func OpMul(values ...interface{}) interface{} {
 }
 
 // OpPow implements exponentiation '**' function.
+// returns x**y, the base-x exponential of y
 func OpPow(values ...float64) float64 {
+	y := float64(1)
 	if len(values) < 1 {
 		panic("Function '**' should take two argument")
+	} else if len(values) == 2 {
+		y = values[1]
+	} else if len(values) > 2 {
+		// support the list of numbers, we separate it into groups of two,
+		// where the second set is processed with the result of the previous
+		// one (thus secessively).
+		var pow float64
+		for i, value := range values {
+			if i == 0 {
+				pow = math.Pow(value, 1)
+			} else {
+				pow = math.Pow(pow, value)
+			}
+		}
+		return pow
 	}
-	return math.Pow(values[0], values[1])
+	return math.Pow(values[0], y)
 }
 
 // OpEqual implements the == comparaison operator. It can work on more than 2
