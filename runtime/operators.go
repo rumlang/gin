@@ -83,6 +83,7 @@ func OpMul(values ...interface{}) interface{} {
 
 // OpPow implements exponentiation '**' function.
 // returns x**y, the base-x exponential of y
+// TODO: https://github.com/rumlang/rum/issues/139
 func OpPow(values ...float64) float64 {
 	y := float64(1)
 	if len(values) < 1 {
