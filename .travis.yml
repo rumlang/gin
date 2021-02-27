@@ -8,13 +8,15 @@ os:
   - osx
 
 go:
-  - 1.x
+  - "1.15.x"
   - master
   - tip
 
 matrix:
   allow_failures:
-    - go: tip
+    - go:
+        - tip
+        - master
 
 script:
   - go test ./...
