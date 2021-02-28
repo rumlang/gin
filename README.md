@@ -56,9 +56,9 @@ go run rum.go
   (println (area 100.0))
 
   ;; use strings package with alias str
-  (println (str.Contains "rumlang" "rum"))
+  (println (str.contains "rumlang" "rum"))
   ;; use csv package by example
-  (println "csv read all:" (. (csv.NewReader (str.NewReader "1,2,3,4")) ReadAll))
+  (println "csv read all:" (. (csv.new-reader (str.new-reader "1,2,3,4")) read-all))
 )
 ```
 
