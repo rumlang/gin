@@ -40,28 +40,28 @@ func checkSExprs(t *testing.T, firstParser string, valid map[string]interface{})
 
 func TestStrings(t *testing.T) {
 	valid := map[string]interface{}{
-		"(strings.Compare \"123\" \"123\")":                    int(0),
-		"(strings.Compare \"0123\" \"123\")":                   int(-1),
-		"(strings.Compare \"123\" \"0123\")":                   int(1),
-		"(strings.Contains \"seafood\" \"foo\")":               true,
-		"(strings.Contains \"seafood\" \"bar\")":               false,
-		"(strings.Contains \"seafood\" \"\")":                  true,
-		"(strings.Contains \"\" \"\")":                         true,
-		"(strings.Count \"cheese\" \"e\")":                     int(3),
-		"(strings.Count \"five\" \"\")":                        int(5),
-		"(strings.Split \"a,b,c\" \",\")":                      []string{"a", "b", "c"},
-		"(strings.Title \"her royal highness\")":               "Her Royal Highness",
-		"(strings.ToLower \"Gophers\")":                        "gophers",
-		"(strings.ToUpper \"Gophers\")":                        "GOPHERS",
-		"(strings.Trim \" !!! Achtung! Achtung! !!!\" \" !\")": "Achtung! Achtung",
-		"(strings.NewReader \"0123456789\")":                   strings.NewReader("0123456789"),
+		"(strings.compare \"123\" \"123\")":                    int(0),
+		"(strings.compare \"0123\" \"123\")":                   int(-1),
+		"(strings.compare \"123\" \"0123\")":                   int(1),
+		"(strings.contains \"seafood\" \"foo\")":               true,
+		"(strings.contains \"seafood\" \"bar\")":               false,
+		"(strings.contains \"seafood\" \"\")":                  true,
+		"(strings.contains \"\" \"\")":                         true,
+		"(strings.count \"cheese\" \"e\")":                     int(3),
+		"(strings.count \"five\" \"\")":                        int(5),
+		"(strings.split \"a,b,c\" \",\")":                      []string{"a", "b", "c"},
+		"(strings.title \"her royal highness\")":               "Her Royal Highness",
+		"(strings.to-lower \"Gophers\")":                       "gophers",
+		"(strings.to-upper \"Gophers\")":                       "GOPHERS",
+		"(strings.trim \" !!! Achtung! Achtung! !!!\" \" !\")": "Achtung! Achtung",
+		"(strings.new-reader \"0123456789\")":                  strings.NewReader("0123456789"),
 	}
 	checkSExprs(t, `(import strings)`, valid)
 }
 
 func TestCSV(t *testing.T) {
 	valid := map[string]interface{}{
-		`(. (csv.NewReader (strings.NewReader "1,2,3,4")) ReadAll)`: [][]string{{"1", "2", "3", "4"}},
+		`(. (csv.new-reader (strings.new-reader "1,2,3,4")) read-all)`: [][]string{{"1", "2", "3", "4"}},
 	}
 	checkSExprs(t, `(import strings
 		                    csv)`, valid)

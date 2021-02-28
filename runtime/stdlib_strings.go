@@ -14,14 +14,14 @@ func (l *StringsLib) LoadLib(ctx *Context, funcPrefix parser.Identifier) {
 	if funcPrefix == "" {
 		funcPrefix = "strings"
 	}
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".Contains"), strings.Contains, CheckArity(2))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".Compare"), strings.Compare, CheckArity(2))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".Count"), strings.Count, CheckArity(2))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".Join"), strings.Join, CheckArity(2))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".Split"), strings.Split, CheckArity(2))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".Title"), strings.Title, CheckArity(1))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".ToLower"), strings.ToLower, CheckArity(1))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".ToUpper"), strings.ToUpper, CheckArity(1))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".Trim"), strings.Trim, CheckArity(2))
-	ctx.SetFn(ConcatIdentifier(funcPrefix, ".NewReader"), strings.NewReader, CheckArity(1))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".contains"), strings.Contains, CheckArity(2))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".compare"), strings.Compare, CheckArity(2))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".count"), strings.Count, CheckArity(2))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".join"), strings.Join, CheckArity(2))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".split"), strings.Split, CheckArity(2))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".title"), strings.Title, CheckArity(1))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".to-lower"), strings.ToLower, CheckArity(1))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".to-upper"), strings.ToUpper, CheckArity(1))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".trim"), strings.Trim, CheckArity(2))
+	ctx.SetFn(ConcatIdentifier(funcPrefix, ".new-reader"), strings.NewReader, CheckArity(1))
 }
