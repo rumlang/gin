@@ -269,7 +269,9 @@ func NewContext(parent *Context) *Context {
 			"print":   Print,
 			"println": Println,
 			"sprintf": Sprintf,
+			"fprintf": fmt.Fprintf,
 			"type":    Type,
+			"nil":     nil,
 			"true":    true,
 			"false":   false,
 			"+":       OpAdd,
@@ -540,7 +542,7 @@ func Invoke(ctx *Context, args ...parser.Value) parser.Value {
 	}
 
 	obj := ctx.MustEval(args[0]).Value()
-	descriptor := args[1].String()
+	descriptor := MethodNameTransform(args[1].String())
 
 	method := reflect.ValueOf(obj).MethodByName(descriptor)
 	if method.IsValid() {

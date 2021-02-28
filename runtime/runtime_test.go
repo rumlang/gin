@@ -267,11 +267,11 @@ func TestInvoke(t *testing.T) {
 
 	exprs := []string{
 		"(let resp (http/Get \"http://www.google.com/robots.txt\"))",
-		"(. resp Status)",
-		"(let respbytes (ioutil/ReadAll (. resp Body)))",
+		"(. resp status)",
+		"(let respbytes (ioutil/ReadAll (. resp body)))",
 		"(let buf (bytes/NewBuffer respbytes))",
-		"(. buf String)",
-		"(print (. buf String))",
+		"(. buf string)",
+		"(print (. buf string))",
 	}
 
 	RunSExpressions(c, exprs, t)
